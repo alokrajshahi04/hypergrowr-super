@@ -1,0 +1,53 @@
+datasource db {
+  provider = "sqlite"
+  // Wasp requires that the url is set to the DATABASE_URL environment variable.
+  url      = env("DATABASE_URL")
+}
+
+// Wasp requires the `prisma-client-js` generator to be present.
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+    id                 Int                 @id @default(autoincrement())
+    websites           Website[]
+    marketingCampaigns MarketingCampaign[]
+    seoReports         SEOReport[]
+    analyticsReports   AnalyticsReport[]
+}
+
+model Website {
+    id          Int      @id @default(autoincrement())
+    userId      Int
+    user        User     @relation(fields: [userId], references: [id])
+    content     String
+    layout      String
+    dateCreated DateTime @default(now())
+}
+
+model MarketingCampaign {
+    id          Int      @id @default(autoincrement())
+    userId      Int
+    user        User     @relation(fields: [userId], references: [id])
+    title       String
+    content     String
+    status      String
+    dateCreated DateTime @default(now())
+}
+
+model SEOReport {
+    id             Int    @id @default(autoincrement())
+    userId         Int
+    user           User   @relation(fields: [userId], references: [id])
+    keywords       String
+    seoPerformance String
+}
+
+model AnalyticsReport {
+    id          Int      @id @default(autoincrement())
+    userId      Int
+    user        User     @relation(fields: [userId], references: [id])
+    data        String
+    dateCreated DateTime @default(now())
+}

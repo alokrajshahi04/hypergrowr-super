@@ -1,0 +1,102 @@
+app HyperGrowr {
+  wasp: {
+    version: "^0.14.0"
+  },
+  title: "HyperGrowr",
+  client: {
+    rootComponent: import { Layout } from "@src/Layout.jsx",
+  },
+  auth: {
+    userEntity: User,
+    methods: {
+      usernameAndPassword: {}
+    },
+    onAuthFailedRedirectTo: "/login",
+    onAuthSucceededRedirectTo: "/"
+  },
+}
+
+route LoginRoute { path: "/login", to: LoginPage }
+page LoginPage {
+  component: import Login from "@src/pages/auth/Login.jsx"
+}
+route SignupRoute { path: "/signup", to: SignupPage }
+page SignupPage {
+  component: import Signup from "@src/pages/auth/Signup.jsx"
+}
+
+action createWebsite {
+  fn: import { createWebsite } from "@src/actions.js",
+  entities: [Website],
+}
+
+action createMarketingCampaign {
+  fn: import { createMarketingCampaign } from "@src/actions.js",
+  entities: [MarketingCampaign],
+}
+
+action createSEOReport {
+  fn: import { createSEOReport } from "@src/actions.js",
+  entities: [SEOReport],
+}
+
+action createAnalyticsReport {
+  fn: import { createAnalyticsReport } from "@src/actions.js",
+  entities: [AnalyticsReport],
+}
+
+query getUserWebsites {
+  fn: import { getUserWebsites } from "@src/queries.js",
+  entities: [Website],
+}
+
+query getUserMarketingCampaigns {
+  fn: import { getUserMarketingCampaigns } from "@src/queries.js",
+  entities: [MarketingCampaign],
+}
+
+query getUserSEOReports {
+  fn: import { getUserSEOReports } from "@src/queries.js",
+  entities: [SEOReport],
+}
+
+query getUserAnalyticsReports {
+  fn: import { getUserAnalyticsReports } from "@src/queries.js",
+  entities: [AnalyticsReport],
+}
+
+route DashboardRoute { path: "/", to: DashboardPage }
+page DashboardPage {
+  component: import DashboardPage from "@src/pages/Dashboard.jsx",
+  authRequired: true
+}
+
+route WebsiteBuilderRoute { path: "/website-builder", to: WebsiteBuilderPage }
+page WebsiteBuilderPage {
+  component: import WebsiteBuilderPage from "@src/pages/WebsiteBuilder.jsx",
+  authRequired: true
+}
+
+route MarketingHubRoute { path: "/marketing-hub", to: MarketingHubPage }
+page MarketingHubPage {
+  component: import MarketingHubPage from "@src/pages/MarketingHub.jsx",
+  authRequired: true
+}
+
+route SEOManagerRoute { path: "/seo-manager", to: SEOManagerPage }
+page SEOManagerPage {
+  component: import SEOManagerPage from "@src/pages/SEOManager.jsx",
+  authRequired: true
+}
+
+route AnalyticsCenterRoute { path: "/analytics-center", to: AnalyticsCenterPage }
+page AnalyticsCenterPage {
+  component: import AnalyticsCenterPage from "@src/pages/AnalyticsCenter.jsx",
+  authRequired: true
+}
+
+route SettingsRoute { path: "/settings", to: SettingsPage }
+page SettingsPage {
+  component: import SettingsPage from "@src/pages/Settings.jsx",
+  authRequired: true
+}
